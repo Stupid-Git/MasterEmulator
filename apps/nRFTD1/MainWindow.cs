@@ -131,7 +131,7 @@ namespace nRFUartForms
 
         void SetStartSendIsEnabled(bool isEnabled)
         {
-            SetButtonIsEnabled(btnStartSend, isEnabled);
+            SetButtonIsEnabled(btnStartSend100K, isEnabled);
         }
 
         void SetStartSendFileIsEnabled(bool isEnabled)
@@ -259,6 +259,8 @@ namespace nRFUartForms
             {
                 this.textBox.Text += text + "\r\n";
                 //this.textBox.AppendText(text);
+                textBox.SelectionStart = textBox.Text.Length;
+                textBox.ScrollToCaret();
             }
         }
 
@@ -483,9 +485,13 @@ namespace nRFUartForms
             controller.StartSendData(fileContent);
         }
 
-        private void btnStartSend_Click(object sender, EventArgs e)
+        private void btnStartSend100K_Click(object sender, EventArgs e)
         {
             Send100K();
+        }
+        private void btnStartSend1K_Click(object sender, EventArgs e)
+        {
+            Send1K();
         }
 
         void Send100K()
@@ -502,13 +508,29 @@ namespace nRFUartForms
             controller.StartSendData(data, numberOfRepetitions);
         }
 
-        void OnBtnStopData(object sender, EventArgs e)
+        void Send1K()
+        {
+            /* Instantiate byte array with 18 bytes of data. */
+            byte[] data = new byte[] { 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6A,
+            0x6B, 0x6C, 0x6D, 0x6E, 0x6F, 0x70, 0x71, 0x72};
+
+            /* Calculate number of packets required to send 100kB of data. */
+            int maxBytesPerPacket = 18;
+            int kibiBytes = 1024;
+            int numberOfRepetitions = (1 * kibiBytes) / maxBytesPerPacket; /* 5120 packets */
+
+            controller.StartSendData(data, numberOfRepetitions);
+        }
+
+        //void OnBtnStopData(object sender, EventArgs e)
+        private void btnStopData_Click(object sender, EventArgs e)
         {
             AddToOutput("Stop transfer");
             controller.StopSendData();
         }
 
         #endregion
+
 
 
 

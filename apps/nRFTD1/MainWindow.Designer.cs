@@ -36,11 +36,12 @@
             this.cbDebug = new System.Windows.Forms.CheckBox();
             this.tbInput = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
-            this.btnStartSend = new System.Windows.Forms.Button();
+            this.btnStartSend100K = new System.Windows.Forms.Button();
             this.btnStopData = new System.Windows.Forms.Button();
             this.btnStartSendFile = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.textBox = new System.Windows.Forms.TextBox();
+            this.btnStartSend1K = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -114,30 +115,31 @@
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
-            // btnStartSend
+            // btnStartSend100K
             // 
-            this.btnStartSend.Location = new System.Drawing.Point(14, 350);
-            this.btnStartSend.Name = "btnStartSend";
-            this.btnStartSend.Size = new System.Drawing.Size(266, 19);
-            this.btnStartSend.TabIndex = 8;
-            this.btnStartSend.Text = "Send 100kB data";
-            this.btnStartSend.UseVisualStyleBackColor = true;
-            this.btnStartSend.Click += new System.EventHandler(this.btnStartSend_Click);
+            this.btnStartSend100K.Location = new System.Drawing.Point(14, 350);
+            this.btnStartSend100K.Name = "btnStartSend100K";
+            this.btnStartSend100K.Size = new System.Drawing.Size(130, 19);
+            this.btnStartSend100K.TabIndex = 8;
+            this.btnStartSend100K.Text = "Send 100kB data";
+            this.btnStartSend100K.UseVisualStyleBackColor = true;
+            this.btnStartSend100K.Click += new System.EventHandler(this.btnStartSend100K_Click);
             // 
             // btnStopData
             // 
-            this.btnStopData.Location = new System.Drawing.Point(314, 350);
+            this.btnStopData.Location = new System.Drawing.Point(306, 350);
             this.btnStopData.Name = "btnStopData";
-            this.btnStopData.Size = new System.Drawing.Size(262, 19);
+            this.btnStopData.Size = new System.Drawing.Size(270, 19);
             this.btnStopData.TabIndex = 9;
-            this.btnStopData.Text = "Send Text";
+            this.btnStopData.Text = "Stop Data Transfer";
             this.btnStopData.UseVisualStyleBackColor = true;
+            this.btnStopData.Click += new System.EventHandler(this.btnStopData_Click);
             // 
             // btnStartSendFile
             // 
             this.btnStartSendFile.Location = new System.Drawing.Point(14, 375);
             this.btnStartSendFile.Name = "btnStartSendFile";
-            this.btnStartSendFile.Size = new System.Drawing.Size(266, 19);
+            this.btnStartSendFile.Size = new System.Drawing.Size(270, 19);
             this.btnStartSendFile.TabIndex = 10;
             this.btnStartSendFile.Text = "Send file";
             this.btnStartSendFile.UseVisualStyleBackColor = true;
@@ -145,9 +147,9 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(314, 375);
+            this.progressBar.Location = new System.Drawing.Point(306, 375);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(262, 19);
+            this.progressBar.Size = new System.Drawing.Size(270, 19);
             this.progressBar.TabIndex = 11;
             // 
             // textBox
@@ -155,19 +157,31 @@
             this.textBox.Location = new System.Drawing.Point(14, 71);
             this.textBox.Multiline = true;
             this.textBox.Name = "textBox";
+            this.textBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox.Size = new System.Drawing.Size(562, 248);
             this.textBox.TabIndex = 12;
+            // 
+            // btnStartSend1K
+            // 
+            this.btnStartSend1K.Location = new System.Drawing.Point(154, 350);
+            this.btnStartSend1K.Name = "btnStartSend1K";
+            this.btnStartSend1K.Size = new System.Drawing.Size(130, 19);
+            this.btnStartSend1K.TabIndex = 13;
+            this.btnStartSend1K.Text = "Send 1kB data";
+            this.btnStartSend1K.UseVisualStyleBackColor = true;
+            this.btnStartSend1K.Click += new System.EventHandler(this.btnStartSend1K_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(588, 427);
+            this.Controls.Add(this.btnStartSend1K);
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnStartSendFile);
             this.Controls.Add(this.btnStopData);
-            this.Controls.Add(this.btnStartSend);
+            this.Controls.Add(this.btnStartSend100K);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.tbInput);
             this.Controls.Add(this.cbDebug);
@@ -194,10 +208,11 @@
         private System.Windows.Forms.CheckBox cbDebug;
         private System.Windows.Forms.TextBox tbInput;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Button btnStartSend;
+        private System.Windows.Forms.Button btnStartSend100K;
         private System.Windows.Forms.Button btnStopData;
         private System.Windows.Forms.Button btnStartSendFile;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.TextBox textBox;
+        private System.Windows.Forms.Button btnStartSend1K;
     }
 }

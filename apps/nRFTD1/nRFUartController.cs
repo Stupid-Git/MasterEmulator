@@ -320,6 +320,11 @@ namespace nRFUart
             Trace.WriteLine(message);
         }
 
+        void karelLog(string message)
+        {
+            AddToLog(message);
+        }
+
         /// <summary>
         /// Convenience method for logging exception messages.
         /// </summary>
@@ -462,6 +467,67 @@ namespace nRFUart
             return startSuccess;
         }
 
+        void karelDumpDevice(BtDevice device)
+        {
+
+            IDictionary<DeviceInfoType, string> deviceInfo;
+            BtDeviceAddress deviceAddress;
+            string str = string.Empty;
+            //string deviceName = string.Empty;
+            //bool hasNameField;
+
+            /*
+             * $$$$ karelDumpDevice $$$$
+             * --Device Address: 3C2DB785F142
+             * $$$$ karelDumpDevice $$$$
+             * --Flags: GeneralDiscoverable, BrEdrNotSupported
+             * --ServicesCompleteListUuid128: 0xD0D0D0D00000000000000000DEADF154
+             * --CompleteLocalName: SimpleBLEPeripheral
+             * --TxPowerLevel: 0dBm
+             * --SlaveConnectionIntervalRange: 10-00-20-00
+             * --RandomTargetAddress: A0-A1-A2-A3-A4-A5
+             * --Rssi: -65
+             * $$$$ karelDumpDevice $$$$ [END]
+             * 
+             * $$$$ karelDumpDevice $$$$
+             * --Device Address: DCB326B6E893
+             * $$$$ karelDumpDevice $$$$
+             * --Flags: LimitedDiscoverable, BrEdrNotSupported
+             * --ServicesCompleteListUuid128: 0x6E400001B5A3F393E0A9E50E24DCCA9E
+             * --CompleteLocalName: Nondick_UART
+             * --Rssi: -45
+             * $$$$ karelDumpDevice $$$$ [END]
+             * 
+             */
+            deviceInfo = device.DeviceInfo;
+
+            deviceAddress = device.DeviceAddress;
+            
+
+            karelLog("$$$$ karelDumpDevice $$$$");
+
+            str = string.Format("--Device Address: {0}", deviceAddress.Value);
+            karelLog(str);
+
+            karelLog("$$$$ karelDumpDevice $$$$");
+
+            //http://stackoverflow.com/questions/972307/can-you-loop-through-all-enum-values
+            //var Avalues = Enum.GetValues(typeof(DeviceInfoType));
+            var Bvalues = Enum.GetValues(typeof(DeviceInfoType)).Cast<DeviceInfoType>();
+
+            foreach (var p in Bvalues)
+            {
+                if (deviceInfo.ContainsKey( p ))
+                {
+                    str = string.Format("--{0}: {1}", p, deviceInfo[ p ]);
+                    karelLog(str);
+                }
+            }
+
+            karelLog("$$$$ karelDumpDevice $$$$ [END]");
+
+        }
+
         /// <summary>
         /// Connecting to the given device, and with the given connection parameters.
         /// </summary>
@@ -474,6 +540,8 @@ namespace nRFUart
                 masterEmulator.StopDeviceDiscovery();
             }
 
+            //karel 
+            karelDumpDevice(device);
             string deviceName = GetDeviceName(device.DeviceInfo);
             AddToLog(string.Format("Connecting to {0}, Device name: {1}",
                 device.DeviceAddress.ToString(), deviceName));
@@ -523,6 +591,7 @@ namespace nRFUart
                 return;
             }
 
+            //karel - Results of Scan
             BtDevice device = arguments.Value;
 
             if (!IsEligibleForConnection(device))
@@ -563,6 +632,8 @@ namespace nRFUart
         {
             IDictionary<DeviceInfoType, string> deviceInfo = device.DeviceInfo;
 
+            karelDumpDevice(device);
+
             bool hasServicesCompleteAdField =
                 deviceInfo.ContainsKey(DeviceInfoType.ServicesCompleteListUuid128);
 
@@ -570,6 +641,7 @@ namespace nRFUart
             {
                 return false;
             }
+
 
             const string bleUartUuid = "6E400001B5A3F393E0A9E50E24DCCA9E";
             bool hasHidServiceUuid =
