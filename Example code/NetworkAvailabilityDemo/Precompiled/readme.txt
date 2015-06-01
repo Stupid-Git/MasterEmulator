@@ -1,0 +1,1 @@
+In order to run this demo application, please copy in all MasterEmulator dlls.
